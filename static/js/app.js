@@ -10,15 +10,17 @@ function init() {
       dropdownMenu.append("option")
     .attr("value", name).text(name)
     });
-  optionChanged(names[0]);
+    
+  // optionChanged(names[0]);
+  var startSample = names[0];
+  updateMeta(startSample);
+  createCharts(startSample);
   });
 }
 
-function optionChanged(name) {
-  updateMeta(name);
-  // Assign the value of the dropdown menu option to a variable
-  // var dataset = dropdownMenu.property("value");
-}
+function optionChanged(nameSelect) {
+  updateMeta(nameSelect);
+  createCharts(nameSelect)
 
 // This function is called when a dropdown menu item is selected
 function updateMeta(selection) {
@@ -40,26 +42,48 @@ function updateMeta(selection) {
   });
 }
 
-function createCharts() {
+function createCharts(name) {
   // Use D3 fetch to read the JSON file
   // The data from the JSON file is arbitrarily named importedData as the argument
   d3.json("data/samples.json").then(function (data) {
     // console.log(importedData);
-    var samples = data.samples;
-    var sampleArray = samples.filter(object => object.id == selection);
-    var sampleData = sampleArray[0]
+    var sample_values = data.sample_values;
+    var otu_ids = data.otu_ids;
+    var otu_labels = data.otu_labels;
+    console.log("sample_values", sample_values);
 
-    // Create variables for data points
-    var sample_values = sampleData.sample_values;
-    var otu_ids = sampleData.otu_ids;
-    var otu_labels = sampleData.otu_labels;
+    let bubbleLayout = {
+      margin: { t: 0 },
+      hovermode: "closests",
+      xaxis: { title: "OTU ID"}
+    }
 
-    // Create variables for top 10 data points
-    var sample_values10 = sample_values10.slice(0, 10).reverse();
-    var otu_ids10 = otu_ids10.slice(0, 10).reverse();
-    var otu_labels10 = otu_labels10.slice(0, 10).reverse();
-    console.log("samples_values10", sample_values10);
+    let bubbleData = [
+      {
+        x: otu_ids,
+        y: sample_values,
+        text: otu_labels,
+        mode: "markers",
+        marker: {
+          size: sample_values,
+          color: otu_ids,
+          colorscale: "Earth"
+        }
+      }
+    ]
+
+    Plotly.plot("bubble", bubbleData, bubbleLayout);
+
+    // // Create variables for top 10 data points
+    // var sample_values10 = sample_values10.slice(0, 10).reverse();
+    // var otu_ids10 = otu_ids10.slice(0, 10).reverse();
+    // var otu_labels10 = otu_labels10.slice(0, 10).reverse();
+    // console.log("samples_values10", sample_values10);
   });
+}
+
+  // Assign the value of the dropdown menu option to a variable
+  // var dataset = dropdownMenu.property("value");
 }
 
 

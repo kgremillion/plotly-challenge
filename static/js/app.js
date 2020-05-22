@@ -11,10 +11,8 @@ function init() {
     .attr("value", name).text(name)
     });
     
-  // optionChanged(names[0]);
-  var startSample = names[0];
-  updateMeta(startSample);
-  createCharts(startSample);
+  optionChanged(names[0]);
+
   });
 }
 
@@ -52,27 +50,26 @@ function createCharts(name) {
     var otu_labels = data.otu_labels;
     console.log("sample_values", sample_values);
 
-    let bubbleLayout = {
-      margin: { t: 0 },
-      hovermode: "closests",
-      xaxis: { title: "OTU ID"}
-    }
+    // let bubbleLayout = {
+    //   margin: { t: 0 },
+    //   hovermode: "closests",
+    //   xaxis: { title: "OTU ID"}
+    // }
 
-    let bubbleData = [
-      {
-        x: otu_ids,
-        y: sample_values,
-        text: otu_labels,
-        mode: "markers",
-        marker: {
-          size: sample_values,
-          color: otu_ids,
-          colorscale: "Earth"
-        }
-      }
-    ]
+    // let bubbleData = [
+    //   {
+    //     x: otu_ids,
+    //     y: sample_values,
+    //     text: otu_labels,
+    //     mode: "markers",
+    //     marker: {
+    //       size: sample_values,
+    //       color: otu_ids,
+    //     }
+    //   }
+    // ]
 
-    Plotly.plot("bubble", bubbleData, bubbleLayout);
+    // Plotly.plot("bubble", bubbleData, bubbleLayout);
 
     // // Create variables for top 10 data points
     // var sample_values10 = sample_values10.slice(0, 10).reverse();

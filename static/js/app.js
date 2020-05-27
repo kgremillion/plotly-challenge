@@ -19,7 +19,7 @@ function init() {
 function optionChanged(nameSelect) {
   updateMeta(nameSelect);
   createCharts(nameSelect)
-
+}
 // This function is called when a dropdown menu item is selected
 function updateMeta(selection) {
 
@@ -40,12 +40,14 @@ function updateMeta(selection) {
   });
 }
 
-function createCharts(name) {
+function createCharts(chartSelect) {
   // Use D3 fetch to read the JSON file
   // The data from the JSON file is arbitrarily named importedData as the argument
   d3.json("data/samples.json").then(function (data) {
-    // console.log(importedData);
-    var sample_values = data.sample_values;
+    console.log("chart", chartSelect);
+
+    var chart_values = data.sample_values;
+    var selectionSample = chart_values.filter(object => object.id == chartSelect);
     var otu_ids = data.otu_ids;
     var otu_labels = data.otu_labels;
     console.log("sample_values", sample_values);
@@ -81,7 +83,7 @@ function createCharts(name) {
 
   // Assign the value of the dropdown menu option to a variable
   // var dataset = dropdownMenu.property("value");
-}
+
 
 
 //   // Trace1 for the Greek Data

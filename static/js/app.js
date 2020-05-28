@@ -92,6 +92,9 @@ function createCharts(chartSelect) {
     Plotly.plot("bubble", [bubbleData], bubbleChart);
 
     // Create bar chart layout for top ten data points in the selected sample
+
+    // var yTicks = otu_ids10.map(movies => movies.metascore);
+
     var barChart = {
       title: "Top Bacteria",
       barmode: "group"
